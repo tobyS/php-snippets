@@ -46,7 +46,7 @@ class BottomK extends \SplMaxHeap
         if ( !( $a instanceof Comparable ) )
         {
             throw new RuntimeException(
-                'Value a must implement ttpDatastructureComparable.'
+                'Value a must implement ts\\Datastructures\\Comparable.'
             );
         }
         return $a->compareTo( $b );
