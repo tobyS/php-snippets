@@ -60,8 +60,6 @@ class Pastebin implements \PHPaster\Paster
     {
         $data = $this->extractPasteData( $paste );
 
-        var_dump( $data );
-
         $res = $this->httpClient->post(
             self::URL,
             $data
