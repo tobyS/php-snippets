@@ -4,8 +4,7 @@ namespace ts\Datastructures\Examples;
 
 require_once __DIR__ . '/../../math/set.php';
 
-use \ts\Datastructures\Math\Set;
-use \stdClass;
+use \ts\Datastructures\Math\Set, \stdClass;
 
 $o1 = new stdClass();
 $o1->id = 23;
