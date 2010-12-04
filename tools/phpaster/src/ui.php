@@ -2,12 +2,34 @@
 
 namespace PHPaster;
 
+/**
+ * PHPaster UI.
+ * 
+ * @package PHPaster
+ * @version 
+ * @copyright Copyright (C) 2010 Tobias Schlitt. All rights reserved.
+ * @author Tobias Schlitt <toby@php.net> 
+ * @license New BSD License
+ */
 class Ui
 {
+    /**
+     * Input handler.
+     * 
+     * @var ezcConsoleInput
+     */
     protected $input;
 
+    /**
+     * Output handler.
+     * 
+     * @var ezcConsoleOutput
+     */
     protected $output;
 
+    /**
+     * Creates a new PHPaster UI.
+     */
     public function __construct()
     {
         $this->input = new \ezcConsoleInput();
@@ -16,6 +38,11 @@ class Ui
         $this->registerParams();
     }
 
+    /**
+     * Processes the paste.
+     * 
+     * @return void
+     */
     public function process()
     {
         try
@@ -24,7 +51,13 @@ class Ui
         }
         catch ( Exception $e )
         {
-            $this->output->outputLine( $e->getMessage() );
+            $this->printError( $e->getMessage() );
+            return;
+        }
+
+        if ( $this->input->helpOptionSet() )
+        {
+            $this->printHelp( true );
             return;
         }
 
@@ -42,13 +75,49 @@ class Ui
         }
         catch ( Exception $e )
         {
-            $this->output->outputLine( $e->getMessage() );
+            $this->printError( $e->getMessage() );
             return;
         }
         
         $this->output->outputLine( "Find your paste at {$url}" );
     }
 
+    /**
+     * Prints the program help text.
+     *
+     * If $long is true, extensive help will be printed.
+     * 
+     * @param bool $long 
+     * @return void
+     */
+    protected function printHelp( $long = false )
+    {
+        $this->output->outputLine(
+            $this->input->getHelpText(
+                'PHPaster. Simple CLI pastebin client. Reads either from STDIN or given file name.',
+                $long
+            )
+        );
+    }
+
+    /**
+     * Prints the given $msg as an error and short help.
+     * 
+     * @param string $msg 
+     * @return void
+     */
+    protected function printError( $msg )
+    {
+        $this->output->outputLine( 'ERROR: ' . $msg );
+        $this->output->outputLine();
+        $this->printHelp();
+    }
+
+    /**
+     * Reads paste from STDIN or given file name.
+     * 
+     * @return string The Paste
+     */
     protected function readPaste()
     {
         if ( ( $file = $this->input->argumentDefinition['file']->value ) )
@@ -60,6 +129,11 @@ class Ui
         return file_get_contents( 'php://STDIN' );
     }
 
+    /**
+     * Registers input options and arguments.
+     * 
+     * @return void
+     */
     protected function registerParams()
     {
         $this->input->registerOption(
