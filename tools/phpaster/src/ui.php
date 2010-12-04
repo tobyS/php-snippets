@@ -95,6 +95,7 @@ class Ui
         $this->output->outputLine(
             $this->input->getHelpText(
                 'PHPaster. Simple CLI pastebin client. Reads either from STDIN or given file name.',
+                80,
                 $long
             )
         );
