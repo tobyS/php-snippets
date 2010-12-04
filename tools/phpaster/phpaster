@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'src/bootstrap.php';
+
+$ui = new \PHPaster\Ui();
+
+$ui->process();
