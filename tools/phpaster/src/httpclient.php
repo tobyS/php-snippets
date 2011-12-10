@@ -18,6 +18,11 @@ class HttpClient
      */
     public function post( $url, $data, array $headers = array() )
     {
+        if( !isset( $headers['Content-Type'] ) )
+        {
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        }
+
         $streamParams = array(
             'http' => array(
                 'method'  => 'POST',
