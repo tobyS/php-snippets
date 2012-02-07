@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Base/src/base.php';
+require_once 'ezc/Base/base.php';
 
 function simpleAutoload( $className )
 {
